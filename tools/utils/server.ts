@@ -3,8 +3,17 @@ import * as express from 'express';
 import * as tinylrFn from 'tiny-lr';
 import * as openResource from 'open';
 import * as serveStatic from 'serve-static';
-import {resolve} from 'path';
-import {APP_BASE, APP_DEST, DOCS_DEST, LIVE_RELOAD_PORT, DOCS_PORT, PORT} from '../config';
+import {join, resolve} from 'path';
+import {
+  APP_BASE,
+  APP_DEST,
+  APP_ROOT,
+  DOCS_DEST,
+  ENV,
+  LIVE_RELOAD_PORT,
+  DOCS_PORT,
+  PORT
+} from '../config';
 
 let tinylr = tinylrFn();
 
@@ -19,8 +28,13 @@ export function serveSPA() {
     express.static(process.cwd())
   );
 
+  // Used when (re)loading the app from a deep link.
+  server.all(APP_BASE + '*', (req, res) =>
+    res.sendFile(resolve(process.cwd(), APP_DEST, 'index.html'))
+  );
+
   server.listen(PORT, () =>
-    openResource('http://localhost:' + PORT + APP_BASE + APP_DEST)
+    openResource('http://localhost:' + PORT + APP_ROOT)
   );
 }
 
