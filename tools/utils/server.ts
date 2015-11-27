@@ -25,7 +25,7 @@ export function serveSPA() {
   server.use(
     APP_BASE,
     connectLivereload({ port: LIVE_RELOAD_PORT }),
-    express.static(process.cwd())
+    express.static(join(process.cwd(), (ENV === 'prod' ? APP_DEST : '')))
   );
 
   // Used when (re)loading the app from a deep link.

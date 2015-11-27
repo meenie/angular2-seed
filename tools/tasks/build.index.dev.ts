@@ -23,6 +23,6 @@ export = function buildIndexDev(gulp, plugins) {
   function getInjectablesDependenciesRef(name?: string) {
     return DEV_DEPENDENCIES
       .filter(dep => dep['inject'] && dep['inject'] === (name || true))
-      .map(dep => require.resolve(dep.src));
+      .map(dep => `${dep.dest}/${dep.src.split('/').pop()}`);
   }
 };
