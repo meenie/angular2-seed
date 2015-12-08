@@ -10,5 +10,7 @@
   <button type="submit">Add</button>
 </form>
 <ul>
-  <li *ng-for="#name of list.get()">{{name}}</li>
+  <li *ng-for="#name of list.users | async">
+    {{name}} <button (click)="list.deleteUser.next(name)">&times;</button>
+    </li>
 </ul>

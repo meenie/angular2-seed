@@ -9,13 +9,14 @@ import {NameList} from '../../services/name_list';
 })
 export class AboutCmp {
   constructor(public list: NameList) {
+    list.loadUsers.next();
   }
  /*
  * @param newname  any text as input.
  * @returns return false to prevent default form submit behavior to refresh the page.
  */
   addName(newname): boolean {
-    this.list.add(newname.value);
+    this.list.addUser.next(newname.value);
     newname.value = '';
     return false;
   }
